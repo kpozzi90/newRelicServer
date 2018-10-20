@@ -1,0 +1,26 @@
+{
+  "name": "newrelicserver",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon server/index.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "fs": "0.0.1-security",
+    "nodemon": "^1.18.4"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kpozzi90/newRelicServer.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kpozzi90/newRelicServer/issues"
+  },
+  "homepage": "https://github.com/kpozzi90/newRelicServer#readme"
+}
