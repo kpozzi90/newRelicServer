@@ -1,0 +1,11 @@
+config:
+  target: 'http://localhost:4000'
+  phases:
+    - duration: 10
+      arrivalRate: 20
+scenarios:
+  - flow:
+    - loop:
+      - post:
+          url: '/newrelic/numbers/{{$randomNumber(100000000,999999999)}}-NL'
+      count: 100

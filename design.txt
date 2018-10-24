@@ -1,0 +1,37 @@
+  Design and Assumptions
+  
+  Duplication
+    In order to solve the issue of duplication, I have a storage object in the controller.js file 
+    where I add the numbers as a key to that object. As searching for keys is a constant lookup time 
+    in an object, it is a fast way for the server to check for duplicates, however it can get memory 
+    intensive and it is only viable because the numbers.log file is being made anew each time the server 
+    is started. If the numbers.log file was meant to persist between sessions, the check would no longer be 
+    valid. The alternative I thought of is using a database with the numbers being a column in that 
+    database, then indexing that column for faster query times. This would be less memory intensive, 
+    however not as fast as a database query would have to be made with every new number request.
+  
+  Number of Maximum Cuncurrent Clients
+    This was what I found to be the most challenging. From my understanding, a client's TCP connection 
+    to a server lasts from the time the the server responds to the client's initial request to connect to 
+    the time the client receives a response back from the server. As this server is single threaded, each 
+    client would be dealt with one at a time. My function handling the writing of the number to the log 
+    file uses fs.appendFile which is asynchronous, however my server does not wait for the process to 
+    finish before sending back a response with a 201 status code. This means that the first client's TCP 
+    connection is terminated before any more TCP connections are established with another client. If the 
+    server used a multithreaded database, it would make sense that there could be multiple TCP connections 
+    established at once while the server was waiting for an asynchronous database query, however that is not 
+    the case here. On my index.js file, I did set the server's max connections to be equal to 5 in case the 
+    server was ever changed to use a multithreaded system. 
+  
+  Printing Report to Standard Output
+    As I used node.js, and there is no print function for javascript, I used console.log which prints to standard 
+    output with a new line when used in node.js. I set this to run on a 10 second interval. This was preventing the 
+    server shutdown to occur, so I had to set the function to a variable in order to run the clearInterval function 
+    on it upon receiving a termination command.
+
+  Performance
+    This was another point of difficulty. My computer is a 2.3 GHz i7 2013 Macbook Pro with 16GB of RAM. The challenge 
+    instruction stated a Macbook Pro of similar power should be able to run this server and achieve over 200k request-
+    per-second. I used Artillery to stress test this server, which stated the server could handle around 1k RPS without 
+    error. This is a huge discrepancy which makes me question my understanding of the instructions or the way Artillery 
+    reports performance.
